@@ -1,0 +1,5 @@
+.directory
+.vs
+
+isWINE/Release/
+isWINE/Debug/
