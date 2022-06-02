@@ -3,15 +3,29 @@
 #include <Windows.h>
 #include <iostream>
 
-bool runsWINE() {
-    HMODULE ntdllMod = GetModuleHandle(L"ntdll.dll");
+static const char* wineGetVersion(HMODULE& ntdllMod) {
 
-    return ntdllMod && GetProcAddress(ntdllMod, "wine_get_version");
+    const char* (CDECL* w_g_v)() =
+        (const char*(*)())GetProcAddress(ntdllMod, "wine_get_version");
+
+    if (w_g_v)
+        return w_g_v();
+    else
+        return NULL;
 }
 
-int main() {
-    if (runsWINE()) {
-        std::cout << 1;
+int main(int argc, char* argv) {
+
+    HMODULE ntdllMod = GetModuleHandle(L"ntdll.dll");
+    if (!ntdllMod) {
+        std::cout << "ERROR: could not find ntdll.dll" << std::endl;
+        return 100;
+    }
+
+    const char* wineVersion = wineGetVersion(ntdllMod);
+
+    if (wineVersion != NULL) {
+        std::cout << wineVersion;
         return 1;
     } else {
         std::cout << 0;

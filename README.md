@@ -15,5 +15,5 @@ isWINE is a very small and simple application to check if your app is running in
 
 ```bash
 $ WINEDEBUG=fixme-all wine isWINE.exe 
-1
+7.0
 ```
