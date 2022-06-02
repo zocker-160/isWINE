@@ -14,7 +14,7 @@ static const char* wineGetVersion(HMODULE& ntdllMod) {
         return NULL;
 }
 
-int main(int argc, char* argv) {
+int main() {
 
     HMODULE ntdllMod = GetModuleHandle(L"ntdll.dll");
     if (!ntdllMod) {
