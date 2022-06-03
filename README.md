@@ -10,6 +10,7 @@ isWINE is a very small and simple application and dynamic link library to check 
 $> isWINE.exe
 0
 ```
+Exit Code: `0`
 
 #### Output on Linux:
 
@@ -18,5 +19,6 @@ $> wine isWINE.exe
 1
 7.0
 ```
+Exit Code: `1`
 
 If you get `fixme` errors in the output, you can add `WINEDEBUG=fixme-all` to the command.
