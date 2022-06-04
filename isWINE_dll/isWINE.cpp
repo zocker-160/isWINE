@@ -4,7 +4,7 @@
 #include <iostream>
 
 extern "C" __declspec(dllexport) bool isWine();
-extern "C" __declspec(dllexport) const char* getWineVersion(HMODULE & ntdllMod);
+extern "C" __declspec(dllexport) const char* getWineVersion();
 
 __declspec(dllexport) bool isWine()
 {
@@ -13,15 +13,15 @@ __declspec(dllexport) bool isWine()
     return ntdllMod && GetProcAddress(ntdllMod, "wine_get_version");
 }
 
-__declspec(dllexport) const char* getWineVersion(HMODULE& ntdllMod) {
+__declspec(dllexport) const char* getWineVersion() {
 
+    HMODULE ntdllMod = GetModuleHandle(L"ntdll.dll");
     const char* (CDECL * w_g_v)() = NULL;
 
-    if (isWine())
+    if (ntdllMod)
         w_g_v = (const char* (*)())GetProcAddress(ntdllMod, "wine_get_version");
 
     if (w_g_v)
         return w_g_v();
-    else
-        return NULL;
+    return NULL;
 }
